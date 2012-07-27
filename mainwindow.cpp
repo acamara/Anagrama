@@ -10,8 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     database.openDB();
-    //create_lemario();
-    //database.createTable();
+    //QString table_name = "en"
+    //create_lemario(table_name);
+    //database.createTable(table_name);
 }
 
 MainWindow::~MainWindow(){
@@ -28,16 +29,18 @@ void MainWindow::on_search_Button_clicked(){
 
     QString palabra = ui->lineEdit_palabraclave->text();
     QString clave = palabra;
+
     word_to_key(&clave);
     qDebug()<<palabra;
     qDebug()<<clave;
+
     QStringList anagramas;
-    database.getAnagramas("es",clave,&anagramas);
+    database.getAnagramas(ui->comboBox_idioma->currentText(),clave,&anagramas);
     view_result(palabra, anagramas);
     qDebug()<<anagramas;
 }
 
-void MainWindow::create_lemario(){
+void MainWindow::create_lemario(QString idioma){
     //Open the file for reading and set the text stream to read, from the file.
     QFile file_for_reading("D:\\Users\\Albert\\Desktop\\lemari_cat.txt");
     file_for_reading.open(QIODevice::ReadOnly);
@@ -50,7 +53,7 @@ void MainWindow::create_lemario(){
         QString palabra = text_stream_for_reading.readLine(70);
         QString clave = palabra;
         word_to_key(&clave);
-        if(database.insertElement(clave,palabra)){
+        if(database.insertElement(idioma,clave,palabra)){
         i++;
         }
     }

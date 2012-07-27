@@ -14,8 +14,8 @@ class DatabaseManager : public QObject{
     public:
         bool openDB();
         bool closeDB();
-        bool createTable();
-        bool insertElement(QString clave, QString palabra);
+        bool createTable(QString table_name);
+        bool insertElement(QString table_name, QString clave, QString palabra);
         bool getAnagramas(QString idioma, QString clave, QStringList *anagramas);
         QSqlError lastError();
 

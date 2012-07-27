@@ -39,8 +39,13 @@ bool DatabaseManager::openDB(){
 }
 
 bool DatabaseManager::closeDB(){
+    bool ret = false;
     // Close database
     db.close();
+    if(!db.isOpen()){
+        ret = true;
+    }
+    return ret;
 }
 
 QSqlError DatabaseManager::lastError(){
@@ -49,27 +54,26 @@ QSqlError DatabaseManager::lastError(){
     return db.lastError();
 }
 
-bool DatabaseManager::createTable(){
-    // Create table "es"
+bool DatabaseManager::createTable(QString table_name){
     bool ret = false;
 
     if (db.isOpen()){
         QSqlQuery query;
-        ret = query.exec("create table if not exists cat "
+        ret = query.exec(QString("create table if not exists %1 "
                          "(id integer primary key autoincrement, "
                          "clave varchar(50), "
-                         "palabra varchar(50))");
+                         "palabra varchar(50))").arg(table_name));
     }
 
     return ret;
 }
 
-bool DatabaseManager::insertElement(QString clave, QString palabra){
+bool DatabaseManager::insertElement(QString table_name, QString clave, QString palabra){
     bool ret = false;
 
     if (db.isOpen()){
         QSqlQuery query;
-        ret = query.exec(QString("INSERT INTO cat VALUES(NULL,'%1','%2')").arg(clave).arg(palabra));
+        ret = query.exec(QString("INSERT INTO %1 VALUES(NULL,'%2','%3')").arg(table_name).arg(clave).arg(palabra));
     }
 
     return ret;

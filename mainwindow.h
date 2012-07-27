@@ -17,7 +17,7 @@ public:
     ~MainWindow();
     
 private slots:
-    void create_lemario();
+    void create_lemario(QString idioma);
     void on_search_Button_clicked();
     void word_to_key(QString *palabra);
     void view_result(QString palabra, QStringList anagramas);
