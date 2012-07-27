@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     database.openDB();
-    create_lemario();
+    //create_lemario();
     //database.createTable();
 }
 
