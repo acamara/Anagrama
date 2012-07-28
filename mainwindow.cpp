@@ -10,8 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     database.openDB();
-    //QString table_name = "en"
-    //create_lemario(table_name);
+    QString table_name = "en";
+    create_lemario(table_name);
     //database.createTable(table_name);
 }
 
@@ -42,7 +42,7 @@ void MainWindow::on_search_Button_clicked(){
 
 void MainWindow::create_lemario(QString idioma){
     //Open the file for reading and set the text stream to read, from the file.
-    QFile file_for_reading("D:\\Users\\Albert\\Desktop\\lemari_cat.txt");
+    QFile file_for_reading("D:\\Users\\Albert\\Desktop\\Albert\\Programación\\Qt\\Anagrama\\Lemari\\lemari_en.txt");
     file_for_reading.open(QIODevice::ReadOnly);
     QTextStream text_stream_for_reading(&file_for_reading);
 
