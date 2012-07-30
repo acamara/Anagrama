@@ -17,10 +17,10 @@ public:
     ~MainWindow();
     
 private slots:
-    void create_lemario(QString idioma);
+    void create_lemario(QString language);
     void on_search_Button_clicked();
-    void word_to_key(QString *palabra);
-    void view_result(QString palabra, QStringList anagramas);
+    void word_to_key(QString *word);
+    void view_result(QString word, QStringList anagramas);
 
 private:
     Ui::MainWindow *ui;

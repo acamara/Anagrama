@@ -13,29 +13,28 @@ DatabaseManager::~DatabaseManager(){
 }
 
 bool DatabaseManager::openDB(){
-    bool correcte = true;
-    //Obtenemos el directorio en el que se almacenan los datos de las aplicaciones
+    bool ret = true;
+    // Get the directory that stores the application data
     QDir dir = QDir::currentPath();
     qDebug()<<dir.absolutePath();
 
-    //Creamos la ruta al fichero de la base de datos
+    //Create the file path to the database
     QString dbName = dir.filePath("lemario.db");
     qDebug()<<dbName;
 
-    //Instanciamos QSqlDatabase y utilizamos dbName como ruta
-    //al archivo de la base de datos
+    //QSqlDatabase instantiate and use dbName as a route to the database
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(dbName);    //<--Línea modificada
 
-    //Abre la base de datos y muestra un aviso en caso de error
+    //Open the database and displays a warning in case of failure
     if (!db.open()) {
       QMessageBox::critical(0, qApp->tr("Error al abrir el Lemario"),
       qApp->tr("Ha sido imposible abrir el Lemario"),
       QMessageBox::Ok);
-      correcte = false;
+      ret = false;
     }
 
-    return correcte;
+    return ret;
 }
 
 bool DatabaseManager::closeDB(){
@@ -68,21 +67,21 @@ bool DatabaseManager::createTable(QString table_name){
     return ret;
 }
 
-bool DatabaseManager::insertElement(QString table_name, QString clave, QString palabra){
+bool DatabaseManager::insertElement(QString table_name, QString key, QString word){
     bool ret = false;
 
     if (db.isOpen()){
         QSqlQuery query;
-        ret = query.exec(QString("INSERT INTO %1 VALUES(NULL,'%2','%3')").arg(table_name).arg(clave).arg(palabra));
+        ret = query.exec(QString("INSERT INTO %1 VALUES(NULL,'%2','%3')").arg(table_name).arg(key).arg(word));
     }
 
     return ret;
 }
 
-bool DatabaseManager::getAnagramas(QString idioma, QString clave, QStringList *anagramas){
+bool DatabaseManager::getAnagramas(QString language, QString key, QStringList *anagramas){
     bool ret = false;
 
-    QSqlQuery query(QString("SELECT palabra FROM %1 WHERE clave = '%2'").arg(idioma).arg(clave));
+    QSqlQuery query(QString("SELECT palabra FROM %1 WHERE clave = '%2'").arg(language).arg(key));
 
     while(query.next()){
         anagramas->append(query.value(0).toString());
