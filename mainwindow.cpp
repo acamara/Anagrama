@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(ui->lineEdit_palabraclave, SIGNAL(returnPressed()),ui->search_Button,SIGNAL(clicked()));
 
     database.openDB();
     //QString table_name = "en";
