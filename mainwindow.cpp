@@ -36,6 +36,7 @@ void MainWindow::on_search_Button_clicked(){
     //qDebug()<<key;
 
     QStringList anagramas;
+    anagramas.clear();
     database.getAnagramas(ui->comboBox_idioma->currentText(),key,&anagramas);
     view_result(word, anagramas);
     //qDebug()<<anagramas;
@@ -69,16 +70,16 @@ void MainWindow::view_result(QString word, QStringList anagramas){
     QString text;
 
     if(anagramas.isEmpty()){
-        text="No existen anagramas para \"";
+        text=" No existen anagramas para \"";
         text += word+"\"";
     }
     else{
-        text="Los anagramas para \"";
+        text=" Los anagramas para \"";
         text += word;
         text += "\" son: \n \n";
 
-        for(int i=0; i<anagramas.length(); i++){
-            text += anagramas.at(i)+"\n";
+        for(int i = 0; i<anagramas.length(); i++){
+            text += "    " + anagramas.at(i)+"\n";
         }
     }
 
